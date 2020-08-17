@@ -5,7 +5,6 @@ import (
     "fmt"
     "io/ioutil"
 	"net/http"
-	// "encoding/json"
 )
 
 func postToZibal(path string, parameters string) string{
