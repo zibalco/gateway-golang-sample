@@ -59,7 +59,7 @@ func verifyResult(result string) string{
 		case "102": 
 			return "merchant یافت نشد."
 		case "103": 
-			return "Mamerchant غیرفعالrch"
+			return "merchant غیر فعال"
 		case "104": 
 			return "merchant نامعتبر"
 		case "201": 
