@@ -3,33 +3,34 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 func postToZibal(path string, requestData interface{}) (PaymentResponse, error) {
 	requestBody, err := json.Marshal(requestData)
 	if err != nil {
-		return PaymentResponse{}, err
+		return PaymentResponse{}, fmt.Errorf("failed to marshal request data: %w", err)
 	}
 
 	url := "https://gateway.zibal.ir/" + path
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
 	if err != nil {
-		return PaymentResponse{}, err
+		return PaymentResponse{}, fmt.Errorf("failed to create HTTP request: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return PaymentResponse{}, err
+		return PaymentResponse{}, fmt.Errorf("HTTP request failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	var response PaymentResponse
 	err = json.NewDecoder(resp.Body).Decode(&response)
 	if err != nil {
-		return PaymentResponse{}, err
+		return PaymentResponse{}, fmt.Errorf("failed to decode response: %w", err)
 	}
 
 	return response, nil
