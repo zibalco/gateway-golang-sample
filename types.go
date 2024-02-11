@@ -34,8 +34,8 @@ type PaymentRequest struct {
 }
 
 type PaymentResponse struct {
-	Result  int    `json:"result"`
-	TrackID string `json:"trackId"`
+	Result  int `json:"result"`
+	TrackID int `json:"trackId"`
 }
 
 type VerificationRequest struct {
