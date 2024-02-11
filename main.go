@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 )
@@ -28,7 +27,7 @@ func handlePaymentRequest() {
 		return
 	}
 
-	fmt.Println(RequestResult(strconv.Itoa(response.Result)))
+	log.Println(RequestResult(strconv.Itoa(response.Result)))
 }
 
 func handlePaymentVerification(trackID string) {
@@ -45,5 +44,5 @@ func handlePaymentVerification(trackID string) {
 		return
 	}
 
-	fmt.Println(VerifyResult(strconv.Itoa(response.Result)))
+	log.Println(VerifyResult(strconv.Itoa(response.Result)))
 }
