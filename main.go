@@ -1,72 +1,48 @@
 package main
 
 import (
-    "fmt"
-	"encoding/json"
-	"bytes"
+	"log"
+	"strconv"
 )
 
 func main() {
+	log.Println(log.LstdFlags | log.Lshortfile)
+	handlePaymentRequest()
+	handlePaymentVerification("your-track-id")
+}
 
-	// Request Sample Code
-	var merchant = "zibal"
+func handlePaymentRequest() {
+	merchant := "zibal"
 
-	data := `{
-        "merchant" : "` + merchant + `",
-        "callbackUrl" : "https://your-domain/callbackUrl",
-        "description" : "golang package",
-        "amount" : 10000
-	}`
+	requestData := PaymentRequest{
+		Merchant:    merchant,
+		CallbackURL: "https://your-domain/callbackUrl",
+		Description: "golang package",
+		Amount:      10000,
+	}
 
-	var result = postToZibal("v1/request", data)
-	// Map result to a struct to easily access parameters
-	var structResult map[string]interface{}
-	br := bytes.NewReader([]byte(result))
-	decodedJson := json.NewDecoder(br)
-	decodedJson.UseNumber()
-	err := decodedJson.Decode(&structResult)
+	response, err := PostToZibal("v1/request", requestData)
 	if err != nil {
-		fmt.Println(err)
+		log.Println("Error:", err)
 		return
 	}
-	
-	// Access response parameters
-	var resultNumber = structResult["result"]
-	var trackId = structResult["trackId"]
-	// Change response parameters types to string
-	trackIdStringValue := fmt.Sprint(trackId)
-	resultStringValue := fmt.Sprint(resultNumber)
 
-	// Print readable messages based on response result code
-	fmt.Println(requestResult(resultStringValue))
+	log.Println(RequestResult(strconv.Itoa(response.Result)))
+}
 
+func handlePaymentVerification(trackID string) {
+	merchant := "zibal"
 
-	// Verify Sample Code
-	data = `{
-        "merchant" : "` + merchant + `",
-        "trackId" : ` + trackIdStringValue + `
-	}`
+	requestData := VerificationRequest{
+		Merchant: merchant,
+		TrackID:  trackID,
+	}
 
-	result = postToZibal("v1/verify", data)
-
-	// Map result to a struct to easily access parameters
-	var structVerify map[string]interface{}
-	br = bytes.NewReader([]byte(result))
-	decodedJson = json.NewDecoder(br)
-	decodedJson.UseNumber()
-	err = decodedJson.Decode(&structVerify)
+	response, err := PostToZibal("v1/verify", requestData)
 	if err != nil {
-		fmt.Println(err)
+		log.Println("Error:", err)
 		return
 	}
-	
-	// Access response parameters
-	var verifyResultCode = structVerify["result"]
 
-	// Change response parameters types to string
-	verifyResultCodeStringValue := fmt.Sprint(verifyResultCode)
-
-	// Print readable messages based on response result code
-	fmt.Println(verifyResult(verifyResultCodeStringValue))
-	
+	log.Println(VerifyResult(strconv.Itoa(response.Result)))
 }
