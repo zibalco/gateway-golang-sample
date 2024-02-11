@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 )
 
 func main() {
+	log.Println(log.LstdFlags | log.Lshortfile)
 	handlePaymentRequest()
 	handlePaymentVerification("your-track-id")
 }
@@ -22,7 +24,7 @@ func handlePaymentRequest() {
 
 	response, err := PostToZibal("v1/request", requestData)
 	if err != nil {
-		fmt.Println("Error:", err)
+		log.Println("Error:", err)
 		return
 	}
 
@@ -39,7 +41,7 @@ func handlePaymentVerification(trackID string) {
 
 	response, err := PostToZibal("v1/verify", requestData)
 	if err != nil {
-		fmt.Println("Error:", err)
+		log.Println("Error:", err)
 		return
 	}
 
