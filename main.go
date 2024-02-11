@@ -1,9 +1,9 @@
 package main
 
 import (
-    "fmt"
-	"encoding/json"
 	"bytes"
+	"encoding/json"
+	"fmt"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
         "callbackUrl" : "https://your-domain/callbackUrl",
         "description" : "golang package",
         "amount" : 10000
-	}`z
+	}`
 
 	var result = postToZibal("v1/request", data)
 	// Map result to a struct to easily access parameters
@@ -29,7 +29,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	
+
 	// Access response parameters
 	var resultNumber = structResult["result"]
 	var trackId = structResult["trackId"]
@@ -39,7 +39,6 @@ func main() {
 
 	// Print readable messages based on response result code
 	fmt.Println(requestResult(resultStringValue))
-
 
 	// Verify Sample Code
 	data = `{
@@ -59,7 +58,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	
+
 	// Access response parameters
 	var verifyResultCode = structVerify["result"]
 
@@ -68,5 +67,5 @@ func main() {
 
 	// Print readable messages based on response result code
 	fmt.Println(verifyResult(verifyResultCodeStringValue))
-	
+
 }
