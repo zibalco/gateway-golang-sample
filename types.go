@@ -11,3 +11,8 @@ type PaymentResponse struct {
 	Result  int    `json:"result"`
 	TrackID string `json:"trackId"`
 }
+
+type VerificationRequest struct {
+	Merchant string `json:"merchant"`
+	TrackID  string `json:"trackId"`
+}
