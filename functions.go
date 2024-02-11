@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func postToZibal(path string, requestData interface{}) (PaymentResponse, error) {
+func PostToZibal(path string, requestData interface{}) (PaymentResponse, error) {
 	requestBody, err := json.Marshal(requestData)
 	if err != nil {
 		return PaymentResponse{}, fmt.Errorf("failed to marshal request data: %w", err)
@@ -36,7 +36,7 @@ func postToZibal(path string, requestData interface{}) (PaymentResponse, error) 
 	return response, nil
 }
 
-func requestResult(result string) string {
+func RequestResult(result string) string {
 	switch result {
 	case "100":
 		return "با موفقیت تایید شد."
@@ -59,7 +59,7 @@ func requestResult(result string) string {
 	return "خطا در پرداخت"
 }
 
-func verifyResult(result string) string {
+func VerifyResult(result string) string {
 	switch result {
 	case "100":
 		return "با موفقیت تایید شد."
