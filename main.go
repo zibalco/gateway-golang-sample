@@ -16,7 +16,7 @@ func main() {
         "callbackUrl" : "https://your-domain/callbackUrl",
         "description" : "golang package",
         "amount" : 10000
-	}`
+	}`z
 
 	var result = postToZibal("v1/request", data)
 	// Map result to a struct to easily access parameters
